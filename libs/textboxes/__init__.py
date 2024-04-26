@@ -1,7 +1,25 @@
-def get_guess(colours):
-
-    print(colours.GREEN)
+def outcome_no_luck_higher(colours):
+    print(colours.BLACK)
+    print("\033[1;7m|----------------------------------------------------|")
+    print("|                                                    |")
+    print("|               No luck this time !                  |")
+    print(f"|             The number was {colours.RED}HIGHER{colours.BLACK}\033[1;7m                  |")
+    print("|                                                    |")
     print("|----------------------------------------------------|")
+    print(colours.BLACK)
+def outcome_no_luck_lower(colours):
+    print(colours.BLACK)
+    print("\033[1;7m|----------------------------------------------------|")
+    print("|                                                    |")
+    print("|               No luck this time !                  |")
+    print(f"|               The number was {colours.RED}LOWER{colours.BLACK}\033[1;7m                 |")
+    print("|                                                    |")
+    print("|----------------------------------------------------|")
+    print(colours.BLACK)
+
+def get_guess(colours):
+    #print(colours.GREEN)
+    print("\033[1;7m|----------------------------------------------------|")
     print("|                                                    |")
     guess = input(f"|                     YOUR GUESS:{colours.RED} ")
     print(f"{colours.GREEN}|                                                    |")
@@ -12,7 +30,7 @@ def get_guess(colours):
 
 def you_win(colours):
     print(colours.GREEN)
-    print("|----------------------------------------------------|")
+    print("\033[1;7m|----------------------------------------------------|")
     print("|                                                    |")
     print("|                YOU ARE A WINNER !!!                |")
     print("|                                                    |")
@@ -21,7 +39,7 @@ def you_win(colours):
 
 def you_loose(colours):
     print(colours.RED)
-    print("|----------------------------------------------------|")
+    print("\033[1;7m|----------------------------------------------------|")
     print("|                                                    |")
     print("|                YOU ARE A LOOSER !!!                |")
     print("|                                                    |")
@@ -30,7 +48,7 @@ def you_loose(colours):
 
 def display_tries(colours):
     print(colours.BLACK)
-    print("|----------------------------------------------------|")
+    print("\033[1;7m|----------------------------------------------------|")
     print("|                                                    |")
     print(f"|             {colours.RED} MAKE YOUR TRY COUNT ! {colours.BLACK}              |")
     print("|                                                    |")
@@ -51,18 +69,18 @@ def display_tries(colours):
 
 def main_menu(colours):
     print(colours.BLACK)
-    print("|----------------------------------------------------|")
+    print("\033[1;7m|----------------------------------------------------|")
     print("|                                                    |")
-    print("|                    MAIN MENU                       |")
+    print(f"|                   MAIN MENU                        |")
     print("|                                                    |")
     print("|====================================================|")
     print("|                                                    |")
     print("|                                                    |")
-    print("|                1. New Game                         |")
-    print("|                2. Select Level                     |")
+    print("|                [1]. New Game                       |")
+    print("|                [2]. Custom Level                   |")
     print("|                                                    |")
-    print("|                3. Exit                             |")
-    print("|              999. Reset Progress                   |")
+    print("|                [3]. Exit                           |")
+    print("|              [999]. Reset Progress                 |")
     print("|                                                    |")
     print("|----------------------------------------------------|")
     print(colours.BLACK)
