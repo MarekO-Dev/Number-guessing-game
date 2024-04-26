@@ -1,102 +1,69 @@
 import os
+from time import sleep as sleep
 import random
 import libs.constants as constants
-import libs.textboxes as tboxes
+from libs.textboxes import *
 import db
 
-TRIES = 3
-def try_again():
-    print("------")
-    print(".             Would you like to try again?            .")
-    print("                       Yes / No                        ")
-    print("                                                       ")
-    print("------")
-    print("")
-    answer = input()
+def save_game(current_level):
+    savefile = open("save_file.sv", "w")
+    savefile.write(current_level)
+    print("SAVING GAME...")
+    sleep(1)
+    savefile.close()
+def load_game():
+    savefile = open("save_file.sv", "r")
+    output = savefile.read()
+    print("LOADING GAME...")
+    sleep(1)
+    savefile.close()
+    return output
 
-    match str(answer).lower():
-        case "yes" | "y" | "ye" | "ya" | "1":
-            new_game()
-        case "no" | "nah" | "n" | "0":
-            return False
-        case "brutal":
-            new_game(minimum = random.randint(1,100), maximum = random.randint(101, 500))
-        case _:
-            print("Unknown answer try again! ")
-            try_again()
+MAX_ROWS = os.get_terminal_size().lines
+MAX_COLS = os.get_terminal_size().columns
+LEVEL_CURRENT = int(load_game())
+LEVEL_MAX = 10
 
-def you_win():
-    global TRIES
+def start_game():
+    # roll number to guess
     os.system("clear")
-    tboxes.you_win(constants.Colours.GREEN, constants.Colours.BLACK)
-    TRIES = 3
-    #main() # This works but try again is an option
-    try_again()
+    LEVEL_CURRENT = int(load_game())
+    print("CURRENT LEVEL: ", LEVEL_CURRENT)
 
-def you_lost():
-    global TRIES
-    os.system("clear")
-    tboxes.you_loose(constants.Colours.RED, constants.Colours.BLACK)
-    TRIES = 3
-
-    #main() # This works but try again is an option
-    try_again()
-
-def subtract_tries():
-    global TRIES
-
-    TRIES -= 1
-
-def guess (number_to_guess):
-    os.system("clear")
-    os.system(f"echo \033[1m {constants.Colours.WHITE} \033[0m")
-
-    global TRIES
-    print(f"{number_to_guess}")
-    tboxes.display_tries(
-        constants.Colours.RED,
-        constants.Colours.GREEN,
-        constants.Colours.ORANGE,
-        constants.Colours.BLACK,
-        TRIES
-    )
-    player_guess = input("Your guess: ")
-    if str(player_guess) == str(number_to_guess):
-        you_win()
+    number_to_guess = random.randint(1, round((LEVEL_CURRENT*1.5))+1)
+    print("NUMBER TO GUESS: ", number_to_guess)
+    player_guess = get_guess(constants.Colours)
+    print("Analyzing...")
+    sleep(1)
+    if player_guess == str(number_to_guess):
+        print("YOU HAVE MADE IT")
+        new_level = LEVEL_CURRENT + 1
+        if new_level == 11:
+            new_level = 10
+        save_game(str(new_level))
+        start_game()
     else:
-        subtract_tries()
-        if TRIES <= 0:
-            os.system(f"echo {constants.Colours.RED}")
-            you_lost()
-        else:
-            guess(number_to_guess)
-
-
-
-def new_game ():
-    random_number = random.randint(1, 3)
-    guess(random_number)
-
-def main_menu ():
-    os.system("clear")
-    tboxes.main_menu(constants.Colours.BLACK, constants.Colours.BLACK)
-    option = input("Your option: ")
-
-    return option
-
+        print("No luck this time!")
 
 def main():
-    match main_menu():
+    # clear screen
+    os.system("clear")
+    # show menu
+    main_menu(constants.Colours)
+    # make user select option
+    user_input = input("            Your option is: ")
+    match str(user_input):
         case "1":
-            new_game()
-        case "2":
-            os.system("clear")
-            print("Not implemented yet")
-            main()
+            start_game()
+        case "1":
+            start_game()
         case "3":
             return False
-        case _:
-            print("Please choose a valid option! ")
-            main()
+        case "999":
+            save_game("1")
+            return False
+
+
+
 
 main()

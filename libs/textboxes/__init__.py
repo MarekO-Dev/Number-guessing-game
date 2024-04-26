@@ -1,57 +1,56 @@
-class Prompt:
-    def __init__ (self, text, box_w, box_h):
+def get_guess(colours):
 
-        self.text = text
-        self.width = box_w
-        self.height = box_h
+    print(colours.GREEN)
+    print("|----------------------------------------------------|")
+    print("|                                                    |")
+    guess = input(f"|                     YOUR GUESS:{colours.RED} ")
+    print(f"{colours.GREEN}|                                                    |")
+    print("|----------------------------------------------------|")
+    print(colours.BLACK)
+    return guess
 
-    def draw (self):
 
-        for row in range(0, self.height):
-            print (row)
-
-
-def you_win(start, reset):
-    print(start)
+def you_win(colours):
+    print(colours.GREEN)
     print("|----------------------------------------------------|")
     print("|                                                    |")
     print("|                YOU ARE A WINNER !!!                |")
     print("|                                                    |")
     print("|----------------------------------------------------|")
-    print(reset)
+    print(colours.BLACK)
 
-def you_loose(start, reset):
-    print(start)
+def you_loose(colours):
+    print(colours.RED)
     print("|----------------------------------------------------|")
     print("|                                                    |")
     print("|                YOU ARE A LOOSER !!!                |")
-    print("|                   BIG POO POOO !                   |")
+    print("|                                                    |")
     print("|----------------------------------------------------|")
-    print(reset)
+    print(colours.BLACK)
 
-def display_tries(red, green, orange, black, tries):
-    print(black)
+def display_tries(colours):
+    print(colours.BLACK)
     print("|----------------------------------------------------|")
     print("|                                                    |")
-    print("|                MAKE YOUR TRY COUNT !               |")
+    print(f"|             {colours.RED} MAKE YOUR TRY COUNT ! {colours.BLACK}              |")
     print("|                                                    |")
     print("|----------------------------------------------------|")
-    print(black)
+    print(colours.BLACK)
     print ("")
     match tries:
         case 3:
-            print(green)
+            print(colours.GREEN)
         case 2:
-            print(orange)
+            print(colours.ORANGE)
         case 1:
-            print(red)
+            print(colours.RED)
         case _:
             return False
-    print (f"Tries left: {tries}")
-    print (black)
+    print (f"Tries left: NOTRIES") ## tries
+    print (colours.BLACK)
 
-def main_menu(start, reset):
-    print(start)
+def main_menu(colours):
+    print(colours.BLACK)
     print("|----------------------------------------------------|")
     print("|                                                    |")
     print("|                    MAIN MENU                       |")
@@ -63,7 +62,7 @@ def main_menu(start, reset):
     print("|                2. Select Level                     |")
     print("|                                                    |")
     print("|                3. Exit                             |")
-    print("|                                                    |")
+    print("|              999. Reset Progress                   |")
     print("|                                                    |")
     print("|----------------------------------------------------|")
-    print(reset)
+    print(colours.BLACK)
