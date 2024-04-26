@@ -4,8 +4,6 @@ import libs.constants as constants
 import libs.textboxes as tboxes
 import db
 
-you_win = tboxes.Prompt("You win!", 100, 30)
-you_win.draw()
 TRIES = 3
 def try_again():
     print("------")
