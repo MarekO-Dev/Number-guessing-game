@@ -1,3 +1,3 @@
-##Number guessing game
+## Number guessing game
 ---
 ### More advanced
