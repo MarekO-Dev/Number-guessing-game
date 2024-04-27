@@ -1,10 +1,12 @@
 import os
 import random
 import libs.constants as constants
+import platform
 from time import sleep as sleep
 from libs.textboxes import *
 from libs.game_state import *
 
+DEBUG_MODE = True
 MAX_ROWS = os.get_terminal_size().lines
 MAX_COLS = os.get_terminal_size().columns
 LEVEL_CURRENT = load_game()[0]
@@ -24,17 +26,21 @@ def start_game():
         save_game("1", "3")
         you_loose(constants.Colours)
         sleep(5)
-        main() # Somewhere here is the bug... when player loses (When player runs out of tries) it goes to main menu but when player choses 3. Exit it will not work
+        main()
 
     number_to_guess = random.randint(1, round((LEVEL_CURRENT*1.5))+1)
-    print("CURRENT LEVEL: ", LEVEL_CURRENT)
-    print("NUMBER TO GUESS: ", number_to_guess)
+    if DEBUG_MODE:
+        print("CURRENT LEVEL: ", LEVEL_CURRENT)
+        print("NUMBER TO GUESS: ", number_to_guess)
+    else:
+        print(f"You are running {platform.system()}")
     player_guess = get_guess(constants.Colours)
     print("Analyzing...")
     sleep(0.3)
     print(">")
     if player_guess == str(number_to_guess):
-        print("YOU HAVE MADE IT")
+        you_win(constants.Colours)
+        sleep(2)
         new_level = LEVEL_CURRENT + 1
         if new_level == 11:
             new_level = 10
@@ -43,32 +49,35 @@ def start_game():
     else:
         if int(player_guess) < int(number_to_guess):
             outcome_no_luck_higher(constants.Colours)
-            sleep(5)
+            sleep(3)
         elif int(player_guess) > int(number_to_guess):
             outcome_no_luck_lower(constants.Colours)
-            sleep(5)
+            sleep(3)
         new_tries = TRIES - 1
 
         if new_tries <= 0:
-            save_game(str(LEVEL_CURRENT), str(new_tries))
+            save_game("1", "3")
             main()
         else:
             save_game(str(LEVEL_CURRENT), str(new_tries))
-            start_game()# OR Somewhere here is the bug... when player loses (When player runs out of tries) it goes to main menu but when player choses 3. Exit it will not work
+            start_game()
 def start_custom_game(level):
     # roll number to guess
     os.system("clear")
 
     LEVEL_CURRENT = level
 
-    number_to_guess = random.randint(1, round((LEVEL_CURRENT*1.5))+1)
-    print("CURRENT LEVEL: ", LEVEL_CURRENT)
-    print("NUMBER TO GUESS: ", number_to_guess)
+    number_to_guess = random.randint(1, round(((LEVEL_CURRENT*2)+3))+1)
+    if DEBUG_MODE:
+        print("CURRENT LEVEL: ", LEVEL_CURRENT)
+        print("NUMBER TO GUESS: ", number_to_guess)
+    else:
+        print(f"You are running {platform.system()}")
     player_guess = get_guess(constants.Colours)
     print("Analyzing...")
     sleep(0.3)
     print(">")
-    if player_guess == str(number_to_guess):
+    if int(player_guess) == int(number_to_guess):
         you_win(constants.Colours)
         sleep(5)
         main()
@@ -84,6 +93,7 @@ def start_custom_game(level):
 def main():
     # clear screen
     os.system("clear")
+    print(platform.system())
     # show menu
     main_menu(constants.Colours)
     # make user select option

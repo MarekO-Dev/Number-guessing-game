@@ -19,7 +19,6 @@ def load_game():
     savefile = open("/home/marek/Documents/Python projects/Portfolio/Number guessing game/save_file.sv", "r")
     output = savefile.read()
     print("LOADING GAME...")
-    print("what we got", output)
     output_list_raw = output.split("#")
     output_list = [int(output_list_raw[0]), int(output_list_raw[1])]
     savefile.close()
